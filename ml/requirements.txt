@@ -1,0 +1,32 @@
+# Lightweight ML Service Requirements
+# Optimized for fast builds and minimal dependencies
+# Total size: ~150MB (vs 2.5GB with full ML stack)
+
+# Web Framework
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Core Scientific Computing
+numpy>=1.24.3
+scipy>=1.11.3
+scikit-learn>=1.3.2
+
+# Geospatial Libraries (Lightweight)
+laspy>=2.5.1
+rasterio>=1.3.9
+pyproj>=3.6.1
+
+# Image Processing (Headless OpenCV)
+opencv-python-headless>=4.8.1
+Pillow>=10.1.0
+
+# Redis for caching
+redis>=5.0.1
+
+# HTTP Client
+httpx>=0.25.2
+
+# Logging
+loguru>=0.7.2
+python-multipart>=0.0.6
