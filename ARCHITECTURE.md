@@ -7,34 +7,34 @@ GeoAgent is a comprehensive geospatial intelligence plugin for the Nexus marketp
 ```mermaid
 flowchart TB
     subgraph External["External Clients"]
-        WebApp["Web Applications"]
+        WebApp["Web Apps"]
         MobileApp["Mobile Clients"]
-        MCPClients["MCP Tool Clients"]
+        MCPClients["MCP Clients"]
     end
 
     subgraph GeoAgent["GeoAgent Service Cluster"]
         subgraph APILayer["API Layer"]
-            API["API Service<br/>(TypeScript)<br/>Port: 9103"]
-            WS["WebSocket Server<br/>Port: 9104"]
+            API["API:9103"]
+            WS["WebSocket:9104"]
         end
 
         subgraph ProcessingLayer["Processing Layer"]
-            Worker["Worker Service<br/>(Go)<br/>Port: 9105"]
-            ML["ML Service<br/>(Python/PyTorch)<br/>Port: 9108"]
+            Worker["Worker:9105"]
+            ML["ML Service:9108"]
         end
 
         subgraph StorageLayer["Storage Layer"]
-            PostGIS["PostGIS Database<br/>Spatial Indexing"]
-            MinIO["MinIO Storage<br/>Ports: 9106-9107<br/>LAS/LAZ/HDF5"]
-            Redis["Redis Cache<br/>Session & Queue"]
+            PostGIS["PostGIS DB"]
+            MinIO["MinIO:9106-9107"]
+            Redis["Redis Cache"]
         end
     end
 
     subgraph NexusIntegration["Nexus Stack Integration"]
-        GraphRAG["GraphRAG<br/>Port: 8090"]
-        Qdrant["Qdrant<br/>Port: 6333"]
-        MageAgent["MageAgent<br/>Port: 8080"]
-        Neo4j["Neo4j<br/>Port: 7687"]
+        GraphRAG["GraphRAG:8090"]
+        Qdrant["Qdrant:6333"]
+        MageAgent["MageAgent:8080"]
+        Neo4j["Neo4j:7687"]
         FileProcess["FileProcessAgent"]
     end
 
@@ -83,14 +83,14 @@ The API Service serves as the primary entry point for all client interactions, h
 ```mermaid
 flowchart LR
     subgraph APIRoutes["API Route Modules"]
-        Layers["Layers<br/>CRUD Operations"]
-        Features["Features<br/>Spatial Data"]
-        Spatial["Spatial Ops<br/>Proximity/Buffer"]
-        Tracking["Tracking<br/>Real-time Assets"]
-        Geofencing["Geofencing<br/>Boundary Monitoring"]
-        H3["H3 Grid<br/>Hexagonal Index"]
-        Ingestion["Ingestion<br/>File Processing"]
-        HyperModal["HyperModal<br/>Multi-modal Analysis"]
+        Layers["Layers CRUD"]
+        Features["Features"]
+        Spatial["Spatial Ops"]
+        Tracking["Tracking"]
+        Geofencing["Geofencing"]
+        H3["H3 Grid"]
+        Ingestion["Ingestion"]
+        HyperModal["HyperModal"]
     end
 
     Request["Incoming Request"] --> Router["Route Handler"]
@@ -145,33 +145,33 @@ The ML Service provides advanced multi-modal geospatial processing capabilities,
 flowchart TB
     subgraph MLCapabilities["ML Service Capabilities"]
         subgraph LiDAR["LiDAR Processing"]
-            DEM["DEM Generation<br/><45s for 100M points"]
-            DSM["DSM/CHM Generation"]
-            GroundClass["Ground Classification<br/>CSF Algorithm"]
-            ObjectExtract["Building/Vegetation<br/>Extraction"]
+            DEM["DEM Gen"]
+            DSM["DSM/CHM Gen"]
+            GroundClass["Ground Class"]
+            ObjectExtract["Object Extract"]
         end
 
-        subgraph Spectral["Hyperspectral Analysis"]
-            Unmix["Spectral Unmixing<br/>NMF/FCLS"]
-            Material["Material Identification<br/>USGS/ASTER Libraries"]
-            Vegetation["Vegetation Indices<br/>NDVI, EVI, SAVI"]
+        subgraph Spectral["Hyperspectral"]
+            Unmix["Spectral Unmix"]
+            Material["Material ID"]
+            Vegetation["Veg Indices"]
         end
 
         subgraph SAR["SAR Processing"]
-            InSAR["InSAR Processing"]
-            Coherence["Coherence Calculation"]
-            ChangeDetect["Change Detection"]
+            InSAR["InSAR"]
+            Coherence["Coherence"]
+            ChangeDetect["Change Detect"]
         end
 
         subgraph Thermal["Thermal Analysis"]
-            HeatMap["Heat Mapping<br/><2s for 4K imagery"]
-            Anomaly["Anomaly Detection<br/>Statistical Outliers"]
+            HeatMap["Heat Mapping"]
+            Anomaly["Anomaly Detect"]
         end
 
         subgraph Fusion["Multi-Modal Fusion"]
-            PixelFusion["Pixel-Level Fusion"]
-            FeatureFusion["Feature-Level Fusion"]
-            DecisionFusion["Decision-Level Fusion"]
+            PixelFusion["Pixel Fusion"]
+            FeatureFusion["Feature Fusion"]
+            DecisionFusion["Decision Fusion"]
         end
     end
 
@@ -185,7 +185,7 @@ flowchart TB
     SAR --> Fusion
     Thermal --> Fusion
 
-    Fusion --> Output["Comprehensive Analysis"]
+    Fusion --> Output["Analysis Output"]
 ```
 
 ## Data Flow Architecture
@@ -195,9 +195,9 @@ flowchart TB
 ```mermaid
 sequenceDiagram
     participant Client
-    participant API as API Service<br/>(9103)
-    participant Worker as Worker Service<br/>(9105)
-    participant ML as ML Service<br/>(9108)
+    participant API as API:9103
+    participant Worker as Worker:9105
+    participant ML as ML:9108
     participant PostGIS
     participant MinIO
     participant Redis
@@ -235,11 +235,11 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant Asset as Tracking Device
-    participant WS as WebSocket Server<br/>(9104)
+    participant WS as WebSocket:9104
     participant API as API Service
     participant Redis
     participant PostGIS
-    participant Subscribers as Subscribed Clients
+    participant Subscribers as Subscribers
 
     Asset->>WS: Location Update
     WS->>API: Process Update
@@ -338,24 +338,24 @@ flowchart LR
         Worker["Worker Service"]
     end
 
-    subgraph GraphRAG["GraphRAG Integration"]
-        SpatialRel["Spatial Relationships"]
-        AnalysisStore["Analysis Results Storage"]
+    subgraph GraphRAG["GraphRAG"]
+        SpatialRel["Spatial Rels"]
+        AnalysisStore["Analysis Store"]
     end
 
-    subgraph Qdrant["Qdrant Integration"]
-        GeoFilter["Geo-Filtered Search"]
-        VectorIndex["Spatial Vector Index"]
+    subgraph Qdrant["Qdrant"]
+        GeoFilter["Geo Filter"]
+        VectorIndex["Vector Index"]
     end
 
-    subgraph MageAgent["MageAgent Integration"]
-        SpatialReason["Spatial Reasoning"]
-        MultiAgent["Multi-Agent Coordination"]
+    subgraph MageAgent["MageAgent"]
+        SpatialReason["Spatial Reason"]
+        MultiAgent["Multi-Agent"]
     end
 
     subgraph FileProcess["FileProcessAgent"]
-        GeoIngest["Geospatial Ingestion"]
-        FormatConvert["Format Conversion"]
+        GeoIngest["Geo Ingest"]
+        FormatConvert["Format Convert"]
     end
 
     API --> GraphRAG
@@ -398,10 +398,10 @@ flowchart TB
         LB["nginx/HAProxy"]
     end
 
-    subgraph APIInstances["API Service Instances"]
-        API1["API Instance 1<br/>Port: 9103"]
-        API2["API Instance 2<br/>Port: 9103"]
-        API3["API Instance N<br/>Port: 9103"]
+    subgraph APIInstances["API Instances"]
+        API1["API 1"]
+        API2["API 2"]
+        API3["API N"]
     end
 
     subgraph WorkerPool["Worker Pool"]
@@ -411,14 +411,14 @@ flowchart TB
     end
 
     subgraph MLPool["ML Service Pool"]
-        ML1["ML Instance 1<br/>GPU/CPU"]
-        ML2["ML Instance 2<br/>GPU/CPU"]
+        ML1["ML 1 GPU/CPU"]
+        ML2["ML 2 GPU/CPU"]
     end
 
     subgraph SharedState["Shared State"]
         Redis["Redis Cluster"]
-        PostGIS["PostGIS<br/>Read Replicas"]
-        MinIO["MinIO<br/>Distributed"]
+        PostGIS["PostGIS Replicas"]
+        MinIO["MinIO Distributed"]
     end
 
     LB --> API1
@@ -470,20 +470,20 @@ flowchart TB
         Request["API Request"]
     end
 
-    subgraph Auth["Authentication Layer"]
-        APIKey["API Key Validation"]
-        JWT["JWT Token Verification"]
-        Tenant["Tenant Identification"]
+    subgraph Auth["Authentication"]
+        APIKey["API Key"]
+        JWT["JWT Verify"]
+        Tenant["Tenant ID"]
     end
 
-    subgraph Authz["Authorization Layer"]
-        RLS["Row-Level Security"]
-        Spatial["Spatial Permissions"]
+    subgraph Authz["Authorization"]
+        RLS["Row-Level Sec"]
+        Spatial["Spatial Perms"]
         Resource["Resource ACLs"]
     end
 
     subgraph Privacy["Location Privacy"]
-        DiffPrivacy["Differential Privacy"]
+        DiffPrivacy["Diff Privacy"]
         KAnon["K-Anonymity"]
         GeoHash["Geohashing"]
     end
@@ -573,9 +573,9 @@ flowchart TB
 
 ### Health Monitoring
 
-- API Health: `GET /health` on port 9103
-- Worker Metrics: `GET /metrics` on port 9105
-- ML Health: `GET /health` on port 9108
+- API Health: GET /health on port 9103
+- Worker Metrics: GET /metrics on port 9105
+- ML Health: GET /health on port 9108
 - MinIO Health: Built-in console monitoring
 
 ---
