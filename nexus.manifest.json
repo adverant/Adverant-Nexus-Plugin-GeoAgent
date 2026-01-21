@@ -1,0 +1,238 @@
+{
+  "$schema": "https://api.adverant.ai/schemas/nexus-plugin-manifest-v1.json",
+  "id": "nexus-geoagent",
+  "name": "GeoAgent",
+  "displayName": "GeoAgent - Geospatial Intelligence",
+  "version": "2.0.0",
+  "description": "Comprehensive geospatial microservice with spatial intelligence capabilities, real-time tracking, H3 hexagonal grid analysis, HyperModal processing (LiDAR, hyperspectral, SAR, thermal), and advanced geospatial operations",
+  "author": {
+    "name": "Adverant Inc.",
+    "email": "engineering@adverant.ai",
+    "url": "https://adverant.ai"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adverant/Adverant-Nexus-Plugin-GeoAgent"
+  },
+  "keywords": [
+    "geospatial",
+    "gis",
+    "spatial-intelligence",
+    "h3-grid",
+    "real-time-tracking",
+    "geofencing",
+    "lidar",
+    "hyperspectral",
+    "sar",
+    "thermal-imaging",
+    "postgis",
+    "mcp",
+    "nexus"
+  ],
+  "categories": [
+    "geospatial",
+    "analytics",
+    "real-time",
+    "data-processing"
+  ],
+  "visibility": "public",
+  "status": "production",
+  "executionMode": "mcp_container",
+  "runtime": {
+    "engine": "node",
+    "version": ">=20.0.0"
+  },
+  "entrypoint": {
+    "type": "http",
+    "port": 9103,
+    "healthCheck": "/health",
+    "readinessCheck": "/ready",
+    "livenessCheck": "/health"
+  },
+  "api": {
+    "version": "v1",
+    "basePath": "/api/v1",
+    "documentation": "/api/docs",
+    "openapi": "/api/openapi.json"
+  },
+  "websocket": {
+    "enabled": true,
+    "port": 9104,
+    "path": "/ws",
+    "events": [
+      "tracking:location_update",
+      "tracking:trajectory_complete",
+      "geofence:enter",
+      "geofence:exit",
+      "geofence:dwell",
+      "layer:created",
+      "layer:updated",
+      "layer:deleted",
+      "feature:created",
+      "feature:updated",
+      "job:progress",
+      "job:completed",
+      "job:failed"
+    ]
+  },
+  "mcp": {
+    "enabled": true,
+    "tools": [
+      {
+        "name": "geoagent_proximity_search",
+        "description": "Find features within a specified radius of a point"
+      },
+      {
+        "name": "geoagent_within_polygon",
+        "description": "Find features within a polygon boundary"
+      },
+      {
+        "name": "geoagent_buffer_zone",
+        "description": "Create buffer zones around features"
+      },
+      {
+        "name": "geoagent_spatial_intersection",
+        "description": "Calculate spatial intersections between geometries"
+      },
+      {
+        "name": "geoagent_heatmap",
+        "description": "Generate heatmap from point data"
+      },
+      {
+        "name": "geoagent_clustering",
+        "description": "Perform spatial clustering analysis"
+      },
+      {
+        "name": "geoagent_h3_aggregate",
+        "description": "Aggregate data to H3 hexagonal grid"
+      },
+      {
+        "name": "hypermodal_lidar_dem",
+        "description": "Generate DEM/DSM/CHM from LiDAR point cloud"
+      },
+      {
+        "name": "hypermodal_lidar_classify",
+        "description": "Classify ground/buildings/vegetation from LiDAR"
+      },
+      {
+        "name": "hypermodal_spectral_unmix",
+        "description": "Perform spectral unmixing on hyperspectral data"
+      },
+      {
+        "name": "hypermodal_spectral_vegetation",
+        "description": "Calculate vegetation indices (NDVI, EVI, etc.)"
+      },
+      {
+        "name": "hypermodal_sar_insar",
+        "description": "Perform InSAR interferometry processing"
+      },
+      {
+        "name": "hypermodal_sar_change",
+        "description": "Detect changes between SAR images"
+      },
+      {
+        "name": "hypermodal_thermal_heatmap",
+        "description": "Generate thermal heatmap with anomaly detection"
+      },
+      {
+        "name": "hypermodal_fusion",
+        "description": "Fuse multiple modalities (LiDAR+spectral+thermal)"
+      }
+    ]
+  },
+  "dependencies": {
+    "services": [
+      {
+        "name": "nexus-graphrag",
+        "version": ">=1.0.0",
+        "required": true,
+        "purpose": "Spatial relationship storage"
+      },
+      {
+        "name": "nexus-qdrant",
+        "version": ">=1.7.0",
+        "required": true,
+        "purpose": "Geo-filtered semantic search"
+      },
+      {
+        "name": "nexus-mageagent",
+        "version": ">=1.0.0",
+        "required": false,
+        "purpose": "Spatial reasoning and multi-agent AI"
+      }
+    ],
+    "external": [
+      {
+        "name": "postgis",
+        "purpose": "Advanced spatial operations",
+        "required": false
+      },
+      {
+        "name": "minio",
+        "purpose": "Large file storage (LAS/LAZ/HDF5)",
+        "required": true
+      }
+    ]
+  },
+  "resources": {
+    "requests": {
+      "cpu": "500m",
+      "memory": "1Gi",
+      "ephemeralStorage": "500Mi"
+    },
+    "limits": {
+      "cpu": "4000m",
+      "memory": "8Gi",
+      "ephemeralStorage": "50Gi"
+    }
+  },
+  "volumes": [
+    {
+      "name": "spatial-data",
+      "mountPath": "/data/spatial",
+      "size": "100Gi",
+      "persistent": true
+    },
+    {
+      "name": "hypermodal-cache",
+      "mountPath": "/data/cache",
+      "size": "50Gi",
+      "persistent": false
+    }
+  ],
+  "environment": {
+    "required": [
+      "NEXUS_API_KEY",
+      "DATABASE_URL",
+      "REDIS_URL"
+    ],
+    "optional": [
+      "POSTGIS_ENABLED",
+      "MINIO_ENDPOINT",
+      "MINIO_ACCESS_KEY",
+      "MINIO_SECRET_KEY",
+      "ML_SERVICE_URL",
+      "WORKER_CONCURRENCY",
+      "WEBSOCKET_PORT"
+    ]
+  },
+  "security": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": false,
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": ["ALL"]
+    }
+  },
+  "metrics": {
+    "enabled": true,
+    "path": "/metrics",
+    "port": 9103
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "outputs": ["stdout"]
+  }
+}
