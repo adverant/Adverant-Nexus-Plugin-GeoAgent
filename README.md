@@ -210,7 +210,7 @@ docker exec -it nexus-postgres psql -U unified_nexus -d unified_nexus -c "CREATE
 - `DELETE /api/v1/hypermodal/jobs/:jobId` - Cancel job
 
 #### Infrastructure
-- MinIO Console: `http://localhost:9107` (Username: `unified_nexus`, Password: `nexus_minio_secure`)
+- MinIO Console: `http://localhost:9107` (Credentials: Set via MINIO_ROOT_USER and MINIO_ROOT_PASSWORD environment variables)
 - ML Service Health: `http://localhost:9108/health`
 
 ## WebSocket Events

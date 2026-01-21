@@ -45,12 +45,14 @@ RUN mkdir -p /app/temp /app/logs && \
 USER geoagent
 
 # Environment variables
+# Environment variables - POSTGRES_URL must be provided at runtime
+# Example: POSTGRES_URL=postgresql://user:password@host:5432/database
 ENV REDIS_URL=redis://nexus-redis:6379 \
-    POSTGRES_URL=postgresql://unified_brain:your_secure_password_change_in_production@nexus-postgres:5432/unified_brain \
     GRAPHRAG_URL=http://nexus-graphrag:8090 \
     MAGEAGENT_URL=http://nexus-mageagent:8080 \
     TEMP_DIR=/app/temp \
     LOG_LEVEL=info
+# POSTGRES_URL - Required: Must be set at runtime via environment variable or K8s secret
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \

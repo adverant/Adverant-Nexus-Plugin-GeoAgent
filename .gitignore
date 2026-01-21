@@ -1,0 +1,199 @@
+# GeoAgent Service - .gitignore
+# Security: Prevent accidental commit of sensitive files
+
+# ===========================================
+# Environment & Secrets
+# ===========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+
+# Credentials and secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+secrets.json
+service-account.json
+*.secret
+.secrets/
+
+# ===========================================
+# Dependencies
+# ===========================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+package-lock.json
+yarn.lock
+
+# Go
+vendor/
+go.sum
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.venv/
+ENV/
+env/
+.conda/
+
+# ===========================================
+# Build Outputs
+# ===========================================
+# TypeScript/JavaScript
+dist/
+build/
+out/
+*.js.map
+*.d.ts
+
+# Go binaries
+*.exe
+*.dll
+*.dylib
+geoagent-worker
+geoagent-api
+
+# Python
+*.whl
+
+# ===========================================
+# IDE & Editor
+# ===========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+.atom/
+.history/
+
+# ===========================================
+# OS Generated
+# ===========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ===========================================
+# Logs & Debug
+# ===========================================
+logs/
+*.log
+npm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ===========================================
+# Testing & Coverage
+# ===========================================
+coverage/
+.nyc_output/
+*.lcov
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# ===========================================
+# Docker
+# ===========================================
+.docker/
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ===========================================
+# Temporary Files
+# ===========================================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+.cache/
+
+# ===========================================
+# Data & Uploads
+# ===========================================
+# GeoAgent specific
+uploads/
+data/
+*.las
+*.laz
+*.tif
+*.tiff
+*.geotiff
+*.hdf5
+*.h5
+*.shp
+*.shx
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.cpg
+
+# MinIO local data
+minio-data/
+
+# ===========================================
+# Miscellaneous
+# ===========================================
+.terraform/
+*.tfstate
+*.tfstate.*
+.vagrant/
+*.pid
+*.seed
+*.pid.lock
+.eslintcache
+.stylelintcache
+
+# ===========================================
+# Claude AI Configuration (Not for Public Repos)
+# ===========================================
+CLAUDE.md
+.claude/

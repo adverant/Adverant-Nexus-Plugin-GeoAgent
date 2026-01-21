@@ -20,7 +20,7 @@ export const config = {
     port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
     database: process.env.POSTGRES_DATABASE || 'unified_nexus',
     user: process.env.POSTGRES_USER || 'unified_nexus',
-    password: process.env.POSTGRES_PASSWORD || 'your_secure_password_change_in_production',
+    password: process.env.POSTGRES_PASSWORD!, // Required: Set via environment variable
     schema: 'geoagent',
     ssl: process.env.POSTGRES_SSL === 'true',
     max: parseInt(process.env.POSTGRES_MAX_CONNECTIONS || '20', 10),
@@ -65,7 +65,7 @@ export const config = {
   neo4j: {
     uri: process.env.NEO4J_URI || 'bolt://nexus-neo4j:7687',
     user: process.env.NEO4J_USER || 'neo4j',
-    password: process.env.NEO4J_PASSWORD || 'your_neo4j_password',
+    password: process.env.NEO4J_PASSWORD!, // Required: Set via environment variable
     database: process.env.NEO4J_DATABASE || 'neo4j',
   },
 
@@ -121,7 +121,7 @@ export const config = {
 
   // Security
   security: {
-    jwtSecret: process.env.JWT_SECRET || 'change_this_secret_in_production',
+    jwtSecret: process.env.JWT_SECRET!, // Required: Set via environment variable
     bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS || '10', 10),
     apiKeyHeader: 'X-API-Key',
   },
@@ -151,7 +151,11 @@ export const config = {
 };
 
 // Validate required configuration
-const requiredEnvVars: string[] = [];
+const requiredEnvVars: string[] = [
+  'POSTGRES_PASSWORD',
+  'NEO4J_PASSWORD',
+  'JWT_SECRET',
+];
 
 for (const envVar of requiredEnvVars) {
   if (!process.env[envVar]) {
